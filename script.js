@@ -1,5 +1,22 @@
-let weekend = [5, 14, 30, 0];
-weekend[1]--;
+let weekend = [5, 15, 30, 0];
+if (localStorage.getItem("hour") != null)
+    weekend[1] = localStorage.getItem("hour");
+
+if (localStorage.getItem("minute") != null)
+    weekend[2] = localStorage.getItem("minute");
+
+if (weekend[2] > 0 && weekend[2] < 60)
+    weekend[1]--;
+
+
+document.querySelector("input.hour").addEventListener("change", () => { 
+    localStorage.setItem("hour", document.querySelector("input.hour").value); 
+    location.reload();
+})
+document.querySelector("input.minute").addEventListener("change", () => { 
+    localStorage.setItem("minute", document.querySelector("input.minute").value); 
+    location.reload();
+})
 
 function newTime() {
     let date = new Date();
@@ -30,11 +47,14 @@ function newTime() {
 
     // Hour
     {
-        if (weekend[1] - date.getHours() < 0 && weekend[1] - date.getDay() < 0) {
-            document.querySelector(".hour .time").innerHTML = weekend[1] - date.getHours() + 24;
+        if (weekend[1] - date.getHours() < 0 && weekend[0] - date.getDay() == 0) {
+            document.querySelectorAll(".time-container").forEach((e) => e.style.display = "none")
             document.querySelector("h1.title").innerHTML = "DET ER HELG!";
-            document.querySelector(".text.before").innerHTML = "Det er bare";
-            document.querySelector(".text.after").innerHTML = "Til helgen er over";
+            document.querySelector(".text.before").innerHTML = "Enda bedre,";
+            document.querySelector(".text.after").innerHTML = "DET ER FREDAG!";
+        }
+        else if (weekend[1] - date.getHours() < 0) {
+            document.querySelector(".hour .time").innerHTML = weekend[1] - date.getHours() + 24;
         }
         else if (weekend[1] - date.getHours() == 0) {
             document.querySelector(".hour").style.display = "none";
@@ -55,8 +75,6 @@ function newTime() {
         
     document.querySelector(".second .time").innerHTML =  weekend[3] - date.getSeconds() < 0 
         ? weekend[3] - date.getSeconds() + 60 : weekend[3] - date.getSeconds();
-} newTime();
+}
 
-setInterval(() => {
-    newTime();
-}, 1);
+setInterval(newTime, 1);
