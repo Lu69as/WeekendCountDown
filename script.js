@@ -56,7 +56,7 @@ function newTime() {
         else if (weekend[1] - date.getHours() < 0) {
             document.querySelector(".hour .time").innerHTML = weekend[1] - date.getHours() + 24;
         }
-        else if (weekend[1] - date.getHours() == 0) {
+        else if (weekend[1] - date.getHours() == 0 && weekend[0] - date.getDay() == 0) {
             document.querySelector(".hour").style.display = "none";
             document.querySelector(".milliseconds").style.display = "flex";
             document.querySelector("h1.title").innerHTML = "Siste nedtelling!";
