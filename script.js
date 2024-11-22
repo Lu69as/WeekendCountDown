@@ -12,11 +12,28 @@ let tempHour = weekend[1];
 document.querySelector("input.hour").addEventListener("change", () => { 
     localStorage.setItem("hour", document.querySelector("input.hour").value); 
     location.reload();
-})
+});
 document.querySelector("input.minute").addEventListener("change", () => { 
     localStorage.setItem("minute", document.querySelector("input.minute").value); 
     location.reload();
-})
+});
+
+let myCanvas = document.createElement('canvas');
+document.querySelector('#celebrate').appendChild(myCanvas);
+function celebrate() {
+    for (let i = 0; i <= innerWidth / 100; i++) {
+        confetti({
+            particleCount: 50,
+            startVelocity: 30,
+            spread: 360,
+            origin: {
+                x: Math.random(),
+                y: Math.random() - 0.2
+            }
+        });
+    };
+}; 
+let celebratecount = 0;
 
 function newTime() {
     let date = new Date();
@@ -28,6 +45,11 @@ function newTime() {
             document.querySelector("h1.title").innerHTML = "DET ER HELG!";
             document.querySelector(".text.before").innerHTML = "Det er bare";
             document.querySelector(".text.after").innerHTML = "Til helgen er over";
+
+            if (celebratecount < 1) {
+                celebrate();
+                celebratecount++;
+            }
         }
         else if (weekend[0] - date.getDay() == 0) {
             document.querySelector(".day").style.display = "none";
@@ -47,11 +69,16 @@ function newTime() {
 
     // Hour
     {
-        if (weekend[1] - date.getHours() < 0 && weekend[0] - date.getDay() == 0) {
+        if (weekend[0] == date.getDay() && (weekend[1] - date.getHours() == 0 && weekend[2] < date.getMinutes())) {
             document.querySelectorAll(".time-container").forEach((e) => e.style.display = "none")
             document.querySelector("h1.title").innerHTML = "DET ER HELG!";
             document.querySelector(".text.before").innerHTML = "Enda bedre,";
             document.querySelector(".text.after").innerHTML = "DET ER FREDAG!";
+
+            if (celebratecount < 1) {
+                celebrate();
+                celebratecount++;
+            }
         }
         else if (weekend[1] - date.getHours() < 0) {
             document.querySelector(".hour .time").innerHTML = weekend[1] - date.getHours() + 24;
