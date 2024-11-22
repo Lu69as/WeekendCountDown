@@ -69,7 +69,7 @@ function newTime() {
 
     // Hour
     {
-        if (weekend[0] == date.getDay() && (weekend[1] - date.getHours() == 0 && weekend[2] < date.getMinutes())) {
+        if (weekend[0] == date.getDay() && (weekend[1] - date.getHours() <= 0 && weekend[2] < date.getMinutes())) {
             document.querySelectorAll(".time-container").forEach((e) => e.style.display = "none")
             document.querySelector("h1.title").innerHTML = "DET ER HELG!";
             document.querySelector(".text.before").innerHTML = "Enda bedre,";
