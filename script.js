@@ -6,6 +6,7 @@ if (localStorage.getItem("minute") != null)
     weekend[2] = localStorage.getItem("minute");
 
 weekend[1]--;
+weekend[2]--;
 
 
 document.querySelector("input.hour").addEventListener("change", () => { 
