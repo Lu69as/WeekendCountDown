@@ -35,11 +35,14 @@ function updateTimeWeekend(countdownDate) {
     let days = countdownDate.getDay() - now.getDay();
     let hours = countdownDate.getHours() - now.getHours();
         if (hours < 0 && days > 0) { hours = 24 + hours; days--;};
+
     let minutes = countdownDate.getMinutes() - now.getMinutes();
         if (minutes > countdownDate.getMinutes() && hours > 0) { hours--; };
         if (minutes < 0 && hours > 0) { minutes = 60 + minutes; hours--; };
         if (minutes < 0 && hours == 0 && days > 0) { minutes = 60 + minutes; hours = 23 + hours; days--; };
+
     let seconds = 59 - now.getSeconds();
+        if (seconds != 0) minutes--;
 
     document.querySelector(".day .time").innerHTML = days;
     document.querySelector(".hour .time").innerHTML = hours;
@@ -114,15 +117,26 @@ function updateTimeWeekend(countdownDate) {
 
 function updateTimeDate(countdownDate) {
     let now = new Date();
-    let days = countdownDate.getDay() - now.getDay();
+    let years = countdownDate.getFullYear() - now.getFullYear();
+    let months = countdownDate.getMonth() - now.getMonth();
+        if (months < 0 && years > 0) { months = 12 + months; years--;};
+
+    let days = countdownDate.getDate() - now.getDate();
+        if (days < 0 && months > 0) { days = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate() + days; months--; };
+        
     let hours = countdownDate.getHours() - now.getHours();
         if (hours > countdownDate.getHours() && days > 0) { hours = 24 + hours; days--;};
-    let minutes = countdownDate.getMinutes() - now.getMinutes();
+        if (hours < 0 && days > 0) { hours = 24 + hours; days--;};
+
+    let minutes = countdownDate.getMinutes() - now.getMinutes() - 1;
         if (minutes > countdownDate.getMinutes() && hours > 0) { hours--; };
         if (minutes < 0 && hours > 0) { minutes = 60 + minutes; hours--; };
         if (minutes < 0 && hours == 0 && days > 0) { minutes = 60 + minutes; hours = 23 + hours; days--; };
+
     let seconds = 59 - now.getSeconds();
 
+    document.querySelector(".year .time").innerHTML = years;
+    document.querySelector(".month .time").innerHTML = months;
     document.querySelector(".day .time").innerHTML = days;
     document.querySelector(".hour .time").innerHTML = hours;
     document.querySelector(".minute .time").innerHTML = minutes;
@@ -134,40 +148,48 @@ function updateTimeDate(countdownDate) {
 
     document.querySelector(".time-container.millisecond").style.display = "none";
 
-    if (days == 0) {
-        document.querySelector(".day").style.display = "none";
+    if (months <= 0) {
+        document.querySelector(".month").style.display = "none";
 
-        document.querySelector("h1.title").innerHTML = "Nå er vi så jævlig nærme!";
+        document.querySelector("h1.title").innerHTML = "Bare en liten måned";
         document.querySelector(".text.before").innerHTML = "Det er bare";
-        document.querySelector(".text.after").innerHTML = "Til helgen nå";
+        document.querySelector(".text.after").innerHTML = "Til din Dato";
 
-        if (hours == 0) {
-            document.querySelector(".hour").style.display = "none";
-            document.querySelector(".time-container.millisecond").style.display = "flex";
+        if (days == 0) {
+            document.querySelector(".day").style.display = "none";
 
-            document.querySelector("h1.title").innerHTML = "Siste nedtelling!";
+            document.querySelector("h1.title").innerHTML = "I dag er dagen!";
             document.querySelector(".text.before").innerHTML = "Det er bare";
-            document.querySelector(".text.after").innerHTML = "Til helgen nå";
+            document.querySelector(".text.after").innerHTML = "Til din Dato";
 
-            if (minutes < 0) {
-                document.querySelectorAll(".time-container").forEach(e => e.style.display = "none" );
+            if (hours == 0) {
+                document.querySelector(".hour").style.display = "none";
+                document.querySelector(".time-container.millisecond").style.display = "flex";
 
-                document.querySelector("h1.title").innerHTML = "DET ER HELG!";
-                document.querySelector(".text.before").innerHTML = "Gå ut av kontoret";
-                document.querySelector(".text.after").innerHTML = "Og skrik hallelujah";
+                document.querySelector("h1.title").innerHTML = "Site nedtelling!";
+                document.querySelector(".text.before").innerHTML = "Det er bare";
+                document.querySelector(".text.after").innerHTML = "Til din Dato";
 
-                if (celebratecount < 1) {
-                    celebrate();
-                    celebratecount++;
+                if (minutes < 0) {
+                    document.querySelectorAll(".time-container").forEach(e => e.style.display = "none" );
+
+                    document.querySelector("h1.title").innerHTML = "ITS TIME!";
+                    document.querySelector(".text.before").innerHTML = "Jeg vet ikke hva du feirer,";
+                    document.querySelector(".text.after").innerHTML = "men det er på tide å begynne!";
+
+                    if (celebratecount < 1) {
+                        celebrate();
+                        celebratecount++;
+                    }
                 }
             }
         }
-        else if (hours < 0) {
+        else if (countdownDate < now) {
             document.querySelectorAll(".time-container").forEach(e => e.style.display = "none" );
 
-            document.querySelector("h1.title").innerHTML = "DET ER HELG!";
-            document.querySelector(".text.before").innerHTML = "Og det er fortsatt";
-            document.querySelector(".text.after").innerHTML = "FREDAG!";
+            document.querySelector("h1.title").innerHTML = "ITS TIME!";
+            document.querySelector(".text.before").innerHTML = "Jeg vet ikke hva du feirer,";
+            document.querySelector(".text.after").innerHTML = "men det er på tide å begynne!";
 
             if (celebratecount < 1) {
                 celebrate();
@@ -175,31 +197,33 @@ function updateTimeDate(countdownDate) {
             }
         }
     }
-    else if (days < 0) {
-        document.querySelectorAll(".time-container").forEach(e => e.style.display = "none" );
-
-        document.querySelector("h1.title").innerHTML = "DET ER FORTSATT HELG!";
-        document.querySelector(".text.before").innerHTML = "Legg deg seint";
-        document.querySelector(".text.after").innerHTML = "Våkne seinere!";
-
-        if (celebratecount < 1) {
-            celebrate();
-            celebratecount++;
-        }
-    }
-    else if (days == 1) {
-        document.querySelector("h1.title").innerHTML = "Endelig snart helg nå!";
-        document.querySelector(".text.before").innerHTML = "Det er enda";
+    else {
+        document.querySelector("h1.title").innerHTML = "Venten fortsetter!";
+        document.querySelector(".text.before").innerHTML = "Det er bare";
+        document.querySelector(".text.after").innerHTML = "Til din Dato";
     }
 }
 
-function refreshWeekendStart() {
-    weekendStart = {
-        day: localStorage.getItem("day") || 5,
-        hour: localStorage.getItem("hour") || 15,
-        minute: localStorage.getItem("minute") || 30
+function refreshCountDown() {
+    if (countdownType == "helg") {
+        weekendStart = {
+            day: localStorage.getItem("day") || 5,
+            hour: localStorage.getItem("hour") || 15,
+            minute: localStorage.getItem("minute") || 30
+        }
+        countdown = new Date(today.getFullYear(), today.getMonth(), nextWeekend(weekendStart.day), weekendStart.hour, weekendStart.minute);
     }
-    countdownDate = new Date(today.getFullYear(), today.getMonth(), nextWeekend(weekendStart.day), weekendStart.hour, weekendStart.minute);
+    else {
+        countdownDate = {
+            date: localStorage.getItem("date") || new Date().getDate(),
+            month: localStorage.getItem("month") || new Date().getMonth(),
+            year: localStorage.getItem("year") || new Date().getFullYear(),
+        
+            hour: localStorage.getItem("hour") || new Date().getHours() + 1,
+            minute: localStorage.getItem("minute") || 0
+        }
+        countdown = new Date(countdownDate.year, countdownDate.month, countdownDate.date, countdownDate.hour, countdownDate.minute);
+    }
 }
 
 let weekendStart = {
@@ -209,12 +233,34 @@ let weekendStart = {
 }
 document.querySelector("#weekday" + weekendStart.day).classList.add("selected");
 
+let countdownDate = {
+    date: localStorage.getItem("date") || new Date().getDate(),
+    month: localStorage.getItem("month") || new Date().getMonth(),
+    year: localStorage.getItem("year") || new Date().getFullYear(),
+
+    hour: localStorage.getItem("hour") || new Date().getHours() + 1,
+    minute: localStorage.getItem("minute") || 0
+}
+
+document.querySelector(".wrong input[type='date'").addEventListener("change", (evt) => {
+    let values = evt.target.value.split("-");
+    localStorage.setItem("year", values[0]);
+    localStorage.setItem("month", values[1] - 1);
+    localStorage.setItem("date", values[2]);
+
+    refreshCountDown();
+})
+document.querySelector(".wrong input[type='date'").value = `${ localStorage.getItem("year") }-${ 
+        localStorage.getItem("month") < 9 ? "0" + (localStorage.getItem("month") - 0 + 1) : (localStorage.getItem("month") - 0 + 1)
+    }-${ localStorage.getItem("date") }`;
+
+document.querySelector("#weekday" + weekendStart.day).classList.add("selected");
 document.querySelectorAll(".wrong h2 span").forEach((e) => {
     e.addEventListener("click", () => {
         document.querySelectorAll(".wrong h2 span").forEach((s) => s.classList.remove("selected"));
         e.classList.add("selected");
         localStorage.setItem("day", e.id.replace("weekday", ""));
-        refreshWeekendStart();
+        refreshCountDown();
     })
 })
 
@@ -226,21 +272,26 @@ document.querySelectorAll(".wrong input[type='text'").forEach((e) => {
         }
         else {
             localStorage.setItem(e.classList[0], e.value);
-            refreshWeekendStart();
+            refreshCountDown();
         }
     });
 })
 
-let countdownType;
+let countdownType = localStorage.getItem("countdownType") || "helg";
+document.querySelector(".wrong select").addEventListener("change", evt => { localStorage.setItem("countdownType", evt.target.value); location.reload() } );
+document.querySelector(".wrong select").value = countdownType;
+document.querySelector(".wrong").classList.add(countdownType);
+
+let interval;
 let today = new Date();
-let countdownDate = new Date(today.getFullYear(), today.getMonth(), nextWeekend(weekendStart.day), weekendStart.hour, weekendStart.minute);
+let countdown;
 
-if (countdownDate.getDay() - today.getDay() >= -1 && countdownDate.getDay() - today.getDay() <= 5)
-    countdownType = "weekend";
-
-if (countdownType == "weekend")
-    setInterval(() => updateTimeWeekend(countdownDate), 10)
-
-else
-    setInterval(() => updateTimeDate(countdownDate), 10)
+if (countdownType == "helg") {
+    countdown = new Date(today.getFullYear(), today.getMonth(), nextWeekend(weekendStart.day), weekendStart.hour, weekendStart.minute);
+    interval = setInterval(() => updateTimeWeekend(countdown), 10);
+}
+else {
+    countdown = new Date(countdownDate.year, countdownDate.month, countdownDate.date, countdownDate.hour, countdownDate.minute);
+    interval = setInterval(() => updateTimeDate(countdown), 10)
+}
     

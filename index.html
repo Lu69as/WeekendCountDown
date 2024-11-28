@@ -27,6 +27,14 @@
     <h1 class="title">Helge-Countdown</h1>
     <div class="countDown-container">
         <p class="text before">Det er</p>
+        <div class="time-container year">
+            <h2 class="time">3</h2>
+            <p>År</p>
+        </div>
+        <div class="time-container month">
+            <h2 class="time">3</h2>
+            <p>Måneder</p>
+        </div>
         <div class="time-container day">
             <h2 class="time">3</h2>
             <p>Dager</p>
@@ -49,7 +57,11 @@
         </div>
         <p class="text after">Til helg</p>
     </div>
-    <div class="wrong weekly">
+    <div class="wrong">
+        <select>
+            <option value="helg">Helg</option>
+            <option value="dato">Dato</option>
+        </select> :
         <input type="date" class="day">
         <h2>
             <span id="weekday1">M</span> -

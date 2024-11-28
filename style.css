@@ -50,23 +50,20 @@ body {
     }
     
     input[type="text"] {
-        transform: translateY(5px);
         max-width: 25px;
     }
-    input {
+    input, select {
+        transform: translateY(5px);
         font-size: 20px;
         padding: 10px 15px;
         border: none;
         border-radius: 10px;
         box-shadow: 0 0 10px #00000030;
+        background: #fff;
         cursor: text;
     }
 
-    &.weekly {
-        input[type="date"] {
-            display: none;
-        }
-    }
+    &.helg input[type="date"], &.dato h2 { display: none; }
 }
 /* .wrong:hover { opacity: 1; } */
 
