@@ -53,7 +53,10 @@ function updateTimeWeekend(countdownDate) {
     document.querySelectorAll(".time-container").forEach(e => e.style.display = "flex" )
     document.querySelectorAll(".time-container:not(.millisecond)").forEach(e => e.style.display = "flex" )
 
-    document.querySelector(".time-container.millisecond").style.display = "none";
+    document.querySelector(".millisecond").style.display = "none";
+    document.querySelector(".year").style.display = "none";
+    document.querySelector(".month").style.display = "none";
+
     document.querySelector("h1.title").innerHTML = "Helge-Countdown";
 
     if (days == 0) {
@@ -147,6 +150,8 @@ function updateTimeDate(countdownDate) {
     document.querySelectorAll(".time-container:not(.millisecond)").forEach(e => e.style.display = "flex" )
 
     document.querySelector(".time-container.millisecond").style.display = "none";
+
+    if (years <= 0) document.querySelector(".year").style.display = "none";
 
     if (months <= 0) {
         document.querySelector(".month").style.display = "none";
