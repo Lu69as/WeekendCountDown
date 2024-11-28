@@ -156,7 +156,7 @@ function updateTimeDate(countdownDate) {
     if (months <= 0) {
         document.querySelector(".month").style.display = "none";
 
-        document.querySelector("h1.title").innerHTML = "Bare en liten måned";
+        document.querySelector("h1.title").innerHTML = "Under en måned til!";
         document.querySelector(".text.before").innerHTML = "Det er bare";
         document.querySelector(".text.after").innerHTML = "Til din Dato";
 
