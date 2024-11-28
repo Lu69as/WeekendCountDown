@@ -34,13 +34,12 @@ function updateTimeWeekend(countdownDate) {
     let hours = countdownDate.getHours() - now.getHours();
         if (hours < 0 && days > 0) { hours = 24 + hours; days--;};
 
-    let minutes = countdownDate.getMinutes() - now.getMinutes();
+    let minutes = countdownDate.getMinutes() - now.getMinutes() - 1;
         if (minutes > countdownDate.getMinutes() && hours > 0) { hours--; };
         if (minutes < 0 && hours > 0) { minutes = 60 + minutes; hours--; };
         if (minutes < 0 && hours == 0 && days > 0) { minutes = 60 + minutes; hours = 23 + hours; days--; };
 
     let seconds = 59 - now.getSeconds();
-        if (seconds != 0) minutes--;
 
     document.querySelector(".day .time").innerHTML = days;
     document.querySelector(".hour .time").innerHTML = hours;
@@ -254,8 +253,7 @@ document.querySelector(".wrong input[type='date'").addEventListener("change", (e
     refreshCountDown();
 })
 document.querySelector(".wrong input[type='date'").value = `${ localStorage.getItem("year") }-${ 
-        localStorage.getItem("month") < 9 ? "0" + (localStorage.getItem("month") - 0 + 1) : (localStorage.getItem("month") - 0 + 1)
-    }-${ localStorage.getItem("date") }`;
+        localStorage.getItem("month") < 9 ? "0" + (localStorage.getItem("month") - 0 + 1) : (localStorage.getItem("month") - 0 + 1) }-${ localStorage.getItem("date") }`;
 
 document.querySelector("#weekday" + weekendStart.day).classList.add("selected");
 document.querySelectorAll(".wrong h2 span").forEach((e) => {
@@ -267,6 +265,8 @@ document.querySelectorAll(".wrong h2 span").forEach((e) => {
     })
 })
 
+document.querySelector(".wrong .hour").setAttribute("placeholder", weekendStart.hour);
+document.querySelector(".wrong .minute").setAttribute("placeholder", weekendStart.minute);
 document.querySelectorAll(".wrong input[type='text'").forEach((e) => {
     e.addEventListener("change", () => {
         if (e.value.length > 2 || !(e.value >= 0) || (e.classList[0] == "hour" && e.value > 24) || (e.classList[0] == "minute" && e.value > 60)) {
