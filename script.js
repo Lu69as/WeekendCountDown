@@ -291,6 +291,7 @@ if (countdownType == "helg") {
     interval = setInterval(() => updateTimeWeekend(countdown), 10);
 }
 else {
+    document.title = "Er det " + (countdownDate.month - 0 + 1) + ". " + countdownDate.date + "?"
     countdown = new Date(countdownDate.year, countdownDate.month, countdownDate.date, countdownDate.hour, countdownDate.minute);
     interval = setInterval(() => updateTimeDate(countdown), 10)
 }
