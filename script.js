@@ -1,17 +1,15 @@
 let myCanvas = document.createElement('canvas');
 document.querySelector('#celebrate').appendChild(myCanvas);
 function celebrate() {
-    for (let i = 0; i <= innerWidth / 100; i++) {
-        confetti({
-            particleCount: 50,
-            startVelocity: 30,
-            spread: 360,
-            origin: {
-                x: Math.random(),
-                y: Math.random() - 0.2
-            }
-        });
-    };
+    confetti({
+        particleCount: 1000,
+        startVelocity: 100,
+        spread: 360,
+        origin: {
+            x: Math.random(),
+            y: Math.random() - 0.2
+        }
+    });
 }; 
 let celebratecount = 0;
 
@@ -300,4 +298,5 @@ else {
     countdown = new Date(countdownDate.year, countdownDate.month, countdownDate.date, countdownDate.hour, countdownDate.minute);
     interval = setInterval(() => updateTimeDate(countdown), 10)
 }
-    
+
+setInterval(() => celebratecount = 0, 5 * 1000)
