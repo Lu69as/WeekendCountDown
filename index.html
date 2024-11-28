@@ -49,12 +49,19 @@
         </div>
         <p class="text after">Til helg</p>
     </div>
-    <div class="wrong">
-        <!-- <p>Er tiden feil for deg? Still inn din helg under</p> -->
-        <div class="weekly">
-            <input type="date" class="day"> :
-            <input type="time" class="hour" placeholder="15">
-        </div>
+    <div class="wrong weekly">
+        <input type="date" class="day">
+        <h2>
+            <span id="weekday1">M</span> -
+            <span id="weekday2">T</span> -
+            <span id="weekday3">O</span> -
+            <span id="weekday4">T</span> -
+            <span id="weekday5">F</span> -
+            <span id="weekday6">L</span> -
+            <span id="weekday0">S</span>
+        </h2> :
+        <input type="text" class="hour" placeholder="15"> :
+        <input type="text" class="minute" placeholder="30">
     </div>
 
     <script src="./script.js"></script>
