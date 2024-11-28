@@ -32,7 +32,7 @@ function nextWeekend(start) {
 
 function updateTimeWeekend(countdownDate) {
     let now = new Date();
-    let days = countdownDate.getDay() - now.getDay();
+    let days = (countdownDate.getDay() == 0 ? 7 : countdownDate.getDay()) - now.getDay();
     let hours = countdownDate.getHours() - now.getHours();
         if (hours < 0 && days > 0) { hours = 24 + hours; days--;};
 
