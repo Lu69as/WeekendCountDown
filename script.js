@@ -159,7 +159,6 @@ function updateTimeDate(countdownDate) {
 
         if (days == 0) {
             document.querySelector(".day").style.display = "none";
-
             document.querySelector("h1.title").innerHTML = "I dag er dagen!";
             document.querySelector(".text.before").innerHTML = "Det er bare";
             document.querySelector(".text.after").innerHTML = "Til din Dato";
@@ -169,8 +168,6 @@ function updateTimeDate(countdownDate) {
                 document.querySelector(".time-container.millisecond").style.display = "flex";
 
                 document.querySelector("h1.title").innerHTML = "Site nedtelling!";
-                document.querySelector(".text.before").innerHTML = "Det er bare";
-                document.querySelector(".text.after").innerHTML = "Til din Dato";
 
                 if (minutes < 0) {
                     document.querySelectorAll(".time-container").forEach(e => e.style.display = "none" );
@@ -185,6 +182,11 @@ function updateTimeDate(countdownDate) {
                     }
                 }
             }
+        }
+        else if (days < 7) {
+            document.querySelector("h1.title").innerHTML = "Under en uke til!";
+            document.querySelector(".text.before").innerHTML = "Det er bare";
+            document.querySelector(".text.after").innerHTML = "Til din Dato";
         }
         else if (countdownDate < now) {
             document.querySelectorAll(".time-container").forEach(e => e.style.display = "none" );
